@@ -11,7 +11,7 @@ urlpatterns=[
     path("delete/", views.DeleteHistory, name='deleteChat'),
     path("logout/", views.logout_view, name="logout"),
     path("login/", views.LoginView.as_view(), name="login"),
-    path('admin/', admin.site.urls),
+   
    
 ]
 
