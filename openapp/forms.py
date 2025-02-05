@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-
+from .models import ChatGptBot
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
@@ -29,4 +29,7 @@ class UserLoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 
-
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = ChatGptBot
+        fields = ['uploaded_file']

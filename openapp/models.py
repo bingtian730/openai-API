@@ -8,6 +8,7 @@ class ChatGptBot(models.Model):
     messageInput = models.TextField()
     bot_response = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    uploaded_file = models.FileField(upload_to='uploads/', null=True, blank=True)  # New field
     def __str__(self):
         return self.user.username
     
