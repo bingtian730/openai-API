@@ -29,7 +29,5 @@ class UserLoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 
-class FileUploadForm(forms.ModelForm):
-    class Meta:
-        model = ChatGptBot
-        fields = ['uploaded_file']
+class UploadFileForm(forms.Form):
+    file = forms.FileField(widget=forms.ClearableFileInput(attrs={'id': 'fileInput', 'onchange': 'updateFileName()'}))

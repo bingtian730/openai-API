@@ -48,7 +48,7 @@
         
         <!-- File Upload Section -->
         <div class="d-flex mb-3 gap-2">
-            <input type="file" name="uploaded_file" class="form-control" />
+            <input type="file" name="fileInput" class="form-control" />
             <button class="btn btn-primary btn-lg" type="submit" name="upload-btn" id="upload-btn" style="width: 80px;">
                 Upload
             </button>
@@ -63,47 +63,50 @@
         </div>
     </form>
 
-    <!-- Display Error Messages -->
+    {% if current_file %}
+    <h2>Current File: {{ current_file }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="action" value="show_preview">Show Preview</button>
+        <button type="submit" name="action" value="show_column_type">Show Column Types</button>
+        <button type="submit" name="action" value="show_null_values">Show Null Values</button>
+        <button type="submit" name="action" value="show_info">Show Info</button>
+        <button type="submit" name="action" value="show_describe">Show Describe</button>
+    </form>
+    {% endif %}
+    
     {% if error_message %}
-    <div class="alert alert-danger mt-3">
+    <div class="alert alert-danger" role="alert">
         {{ error_message }}
     </div>
     {% endif %}
-
-    <!-- File Preview and Data Info Section -->
-    {% if request.session.data_preview %}
-    <div class="mt-3">
-        <h3>Data Preview:</h3>
-        <div>{{ request.session.data_preview|safe }}</div>
+    
+    {% if preview_data %}
+    <h2>File Preview:</h2>
+    <div class="table-responsive">
+        {{ preview_data|safe }}
     </div>
     {% endif %}
     
-    {% if request.session.column_types %}
-    <div class="mt-3">
-        <h3>Column Types:</h3>
-        <pre>{{ request.session.column_types }}</pre>
-    </div>
+    {% if column_types %}
+    <h2>Data Columns and Types:</h2>
+    <pre>{{ column_types }}</pre>
     {% endif %}
     
-    {% if request.session.null_values %}
-    <div class="mt-3">
-        <h3>Null Values:</h3>
-        <pre>{{ request.session.null_values }}</pre>
-    </div>
+    {% if null_values %}
+    <h2>Null Values:</h2>
+    <pre>{{ null_values }}</pre>
     {% endif %}
     
-    {% if request.session.info %}
-    <div class="mt-3">
-        <h3>Data Info:</h3>
-        <pre>{{ request.session.info }}</pre>
-    </div>
+    {% if info %}
+    <h2>DataFrame Info:</h2>
+    <pre>{{ info }}</pre>
     {% endif %}
     
-    {% if request.session.describe %}
-    <div class="mt-3">
-        <h3>Data Description:</h3>
-        <pre>{{ request.session.describe }}</pre>
-    </div>
+    {% if describe %}
+    <h2>Summary Statistics:</h2>
+    <pre>{{ describe }}</pre>
     {% endif %}
 </div>
+
 {% endblock content %}
